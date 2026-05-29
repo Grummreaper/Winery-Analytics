@@ -212,7 +212,7 @@ if page == "Executive Summary":
     left, right = st.columns(2)
 
     with left:
-        monthly = sales.groupby(pd.Grouper(key="date", freq="M"), as_index=False)["revenue"].sum()
+        monthly = sales.groupby(pd.Grouper(key="date", freq="ME"), as_index=False)["revenue"].sum()
         fig = px.line(monthly, x="date", y="revenue", title="Monthly Revenue Trend")
         st.plotly_chart(fig, use_container_width=True)
 
