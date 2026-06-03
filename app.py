@@ -310,8 +310,16 @@ events = clean_dates(events)
 club = clean_dates(club)
 customers = clean_dates(customers)
 
-all_wineries = sorted(sales["winery"].unique().tolist()) if "winery" in sales.columns else ["All"]
-selected_wineries = st.sidebar.multiselect("Select winery location(s)", all_wineries, default=all_wineries)
+all_wineries = sorted(sales["winery"].unique().tolist()) if "winery" in sales.columns else ["Default Winery"]
+
+if len(all_wineries) > 1:
+    selected_wineries = st.sidebar.multiselect(
+        "Location Filter",
+        all_wineries,
+        default=all_wineries
+    )
+else:
+    selected_wineries = all_wineries
 
 if "winery" in sales.columns:
     sales = sales[sales["winery"].isin(selected_wineries)]
