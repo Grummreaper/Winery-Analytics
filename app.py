@@ -277,7 +277,9 @@ def generate_pdf_report(fin, insights):
     pdf.cell(0, 10, "Recommendations", ln=True)
     pdf.set_font("Helvetica", "", 10)
     for item in insights[:10]:
-        pdf.multi_cell(0, 7, f"- {item.replace('•', '-')}")
+        safe_item = str(item).replace("•", "-").replace("–", "-").replace("—", "-")
+        safe_item = safe_item.encode("latin-1", "ignore").decode("latin-1")
+        pdf.multi_cell(180, 7, f"- {safe_item[:180]}")
     output = pdf.output(dest="S")
     if isinstance(output, str):
         return output.encode("latin-1")
